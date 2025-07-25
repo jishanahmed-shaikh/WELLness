@@ -139,21 +139,20 @@
                         </div>
                     </div>
 
-                    {% if prediction_proba %}
+                    {% if prob_breakdown %}
                     <div class="probability-chart">
-                        <h4>Emotion Breakdown</h4>
+                        <h4>Mental Health Status Breakdown</h4>
                         <div class="prob-bars">
-                            {% for i, prob in enumerate(prediction_proba) %}
-                            {% set emotion = emotions[i] %}
+                            {% for item in prob_breakdown %}
                             <div class="prob-item">
                                 <div class="prob-label">
-                                    <span class="prob-emoji">{{ emotion.emoji }}</span>
-                                    <span class="prob-name">{{ emotion.name }}</span>
-                                    <span class="prob-percent">{{ "%.1f"|format(prob * 100) }}%</span>
+                                    <span class="prob-emoji">{{ item.emoji }}</span>
+                                    <span class="prob-name">{{ item.name }}</span>
+                                    <span class="prob-percent">{{ "%.1f"|format(item.probability * 100) }}%</span>
                                 </div>
                                 <div class="prob-bar">
                                     <div class="prob-fill"
-                                        style="width: {{ prob * 100 }}%; background-color: {{ emotion.color }}"></div>
+                                        style="width: {{ item.probability * 100 }}%; background-color: {{ item.color }}"></div>
                                 </div>
                             </div>
                             {% endfor %}
