@@ -1,6 +1,6 @@
 # WELLness 🧠 – ML Powered Sentiment Analysis Web App
 
-WELLness is an intelligent and user-friendly web application that leverages MACHINE LEARNING to analyze the sentiment behind your thoughts and expressions. With a simple and elegant interface, this application enables users to enter a message or feeling and receive instant feedback about the emotional tone—whether it's positive, negative, or neutral.
+WELLness is an intelligent and user-friendly web application that leverages MACHINE LEARNING to analyze the sentiment behind your thoughts and expressions. With a simple and elegant interface, this application enables users to enter a message or feeling and receive instant feedback about the emotional tone - whether it's positive, negative, or neutral.
 
 ## 🌟 Features
 
@@ -76,4 +76,4 @@ This project was built for a hackathon to demonstrate how Machine Learning can b
 
 ---
 
-**Made with ❤️ for mental wellness.**
+**Made with ❤️ for Mental Wellness with the Power of ML.**
