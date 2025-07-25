@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WELLness | AI-Powered Emotion Analysis</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-brain"></i>
+                <span>WELLness</span>
+            </div>
+            <div class="nav-links">
+                <a href="#home"><i class="fas fa-home"></i> Home</a>
+                <a href="#about"><i class="fas fa-info-circle"></i> About</a>
+                <a href="#emotions"><i class="fas fa-heart"></i> Emotions</a>
+                <a href="#how"><i class="fas fa-cogs"></i> How it Works</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-container">
+            <!-- Left Side Chat Snippets -->
+            <div class="chat-snippets left-snippets">
+                <div class="chat-bubble bubble-1">
+                    <div class="chat-header">
+                        <div class="user-avatar">😊</div>
+                        <span>Sarah M.</span>
+                    </div>
+                    <p>"I'm feeling really excited about my new job!"</p>
+                    <div class="emotion-tag joy">Joy - 94%</div>
+                </div>
+                
+                <div class="chat-bubble bubble-2">
+                    <div class="chat-header">
+                        <div class="user-avatar">😔</div>
+                        <span>Alex K.</span>
+                    </div>
+                    <p>"Today has been really tough, missing my family..."</p>
+                    <div class="emotion-tag sadness">Sadness - 87%</div>
+                </div>
+                
+                <div class="chat-bubble bubble-3">
+                    <div class="chat-header">
+                        <div class="user-avatar">❤️</div>
+                        <span>Maria L.</span>
+                    </div>
+                    <p>"I love spending time with my children on weekends"</p>
+                    <div class="emotion-tag love">Love - 91%</div>
+                </div>
+                
+                <div class="stat-card stat-1">
+                    <div class="stat-number">280M+</div>
+                    <div class="stat-label">People worldwide experience depression</div>
+                    <div class="stat-source">WHO 2023</div>
+                </div>
+            </div>
+
+            <div class="hero-content">
+                <div class="hero-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h1 class="hero-title">WELLness Emotion Analyzer</h1>
+                <p class="hero-subtitle">Discover your emotional state through AI-powered text analysis</p>
+
+                <!-- Input Form -->
+                <div class="input-container">
+                    <form method="POST" action="/predict" class="prediction-form">
+                        <div class="textarea-wrapper">
+                            <textarea name="text" id="textInput"
+                                placeholder="Share your thoughts, feelings, or experiences here..." maxlength="1000"
+                                required>{{ user_input or '' }}</textarea>
+                            <div class="char-counter">
+                                <span id="charCount">{{ (user_input|length) if user_input else 0 }}</span>/1000
+                            </div>
+                        </div>
+                        <div class="button-group">
+                            <button type="submit" class="predict-btn">
+                                <i class="fas fa-magic"></i>
+                                Analyze Emotion
+                            </button>
+                            <a href="/reset" class="reset-btn">
+                                <i class="fas fa-refresh"></i>
+                                Reset
+                            </a>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Results Section -->
+                {% if reset_success %}
+                <div class="success-box">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Form has been reset successfully!</span>
+                </div>
+                {% endif %}
+
+                {% if error %}
+                <div class="error-box">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span>{{ error }}</span>
+                </div>
+                {% endif %}
+
+                {% if emotion_info %}
+                <div class="result-container">
+                    <div class="result-header">
+                        <h3>Analysis Complete</h3>
+                        <div class="timestamp">{{ current_time }}</div>
+                    </div>
+
+                    <div class="emotion-result" style="border-color: {{ emotion_info.color }}">
+                        <div class="emotion-main">
+                            <div class="emotion-emoji">{{ emotion_info.emoji }}</div>
+                            <div class="emotion-details">
+                                <h4>{{ emotion_info.name }}</h4>
+                                <p>{{ emotion_info.description }}</p>
+                            </div>
+                        </div>
+
+                        <div class="confidence-meter">
+                            <div class="confidence-label">Confidence: {{ confidence }}</div>
+                            <div class="confidence-bar">
+                                {% set confidence_percent = 75 if confidence == 'High' else 90 if confidence == 'Very High' else 50 if confidence == 'Medium' else 25 %}
+                                <div class="confidence-fill"
+                                    style="width: {{ confidence_percent }}%; background-color: {{ emotion_info.color }}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% if prediction_proba %}
+                    <div class="probability-chart">
+                        <h4>Emotion Breakdown</h4>
+                        <div class="prob-bars">
+                            {% for i, prob in enumerate(prediction_proba) %}
+                            {% set emotion = emotions[i] %}
+                            <div class="prob-item">
+                                <div class="prob-label">
+                                    <span class="prob-emoji">{{ emotion.emoji }}</span>
+                                    <span class="prob-name">{{ emotion.name }}</span>
+                                    <span class="prob-percent">{{ "%.1f"|format(prob * 100) }}%</span>
+                                </div>
+                                <div class="prob-bar">
+                                    <div class="prob-fill"
+                                        style="width: {{ prob * 100 }}%; background-color: {{ emotion.color }}"></div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <div class="analysis-details">
+                        <div class="detail-item">
+                            <i class="fas fa-text-width"></i>
+                            <span>Text Length: {{ user_input|length }} characters</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-filter"></i>
+                            <span>Processed: "{{ processed_text[:50] }}{% if processed_text|length > 50 %}...{% endif %}"</span>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Right Side Chat Snippets -->
+            <div class="chat-snippets right-snippets">
+                <div class="chat-bubble bubble-4">
+                    <div class="chat-header">
+                        <div class="user-avatar">😨</div>
+                        <span>John D.</span>
+                    </div>
+                    <p>"I'm worried about the presentation tomorrow..."</p>
+                    <div class="emotion-tag fear">Fear - 82%</div>
+                </div>
+                
+                <div class="chat-bubble bubble-5">
+                    <div class="chat-header">
+                        <div class="user-avatar">😲</div>
+                        <span>Emma R.</span>
+                    </div>
+                    <p>"I can't believe I got the scholarship!"</p>
+                    <div class="emotion-tag surprise">Surprise - 89%</div>
+                </div>
+                
+                <div class="chat-bubble bubble-6">
+                    <div class="chat-header">
+                        <div class="user-avatar">😠</div>
+                        <span>Mike T.</span>
+                    </div>
+                    <p>"Traffic is making me so frustrated today"</p>
+                    <div class="emotion-tag anger">Anger - 76%</div>
+                </div>
+                
+                <div class="stat-card stat-2">
+                    <div class="stat-number">1 in 4</div>
+                    <div class="stat-label">People will experience mental health issues</div>
+                    <div class="stat-source">Mental Health Foundation</div>
+                </div>
+            </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Emotions Guide -->
+    <section class="emotions-guide" id="emotions">
+        <div class="container">
+            <h2>Emotion Categories</h2>
+            <p>Our AI model can detect these primary emotions in your text:</p>
+            <div class="emotions-grid">
+                {% for key, emotion in emotions.items() %}
+                <div class="emotion-card" style="border-left-color: {{ emotion.color }}">
+                    <div class="emotion-header">
+                        <span class="emotion-emoji-large">{{ emotion.emoji }}</span>
+                        <h3>{{ emotion.name }}</h3>
+                    </div>
+                    <p>{{ emotion.description }}</p>
+                    <div class="emotion-color" style="background-color: {{ emotion.color }}"></div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section> <!-- A
+bout Section -->
+    <section class="about-section" id="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>About WELLness</h2>
+                    <p>
+                        WELLness is an advanced AI-powered emotion detection platform that helps individuals understand
+                        their emotional well-being through sophisticated text analysis. Using cutting-edge machine
+                        learning and natural language processing techniques, our system can identify and classify
+                        emotional patterns in written text.
+                    </p>
+                    <div class="features-list">
+                        <div class="feature-item">
+                            <i class="fas fa-robot"></i>
+                            <span>Custom-trained ML model for accurate emotion detection</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Detailed probability analysis and confidence scoring</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Privacy-focused with no data storage</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-clock"></i>
+                            <span>Real-time analysis and instant results</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-visual">
+                    <div class="brain-animation">
+                        <i class="fas fa-brain"></i>
+                        <div class="pulse-ring"></div>
+                        <div class="pulse-ring delay-1"></div>
+                        <div class="pulse-ring delay-2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works" id="how">
+        <div class="container">
+            <h2>How It Works</h2>
+            <div class="steps-container">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Input Your Text</h3>
+                        <p>Type or paste your thoughts, journal entries, messages, or any text you'd like to analyze.
+                        </p>
+                        <i class="fas fa-keyboard step-icon"></i>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>AI Processing</h3>
+                        <p>Our custom-trained model preprocesses and analyzes your text using advanced NLP techniques.
+                        </p>
+                        <i class="fas fa-cogs step-icon"></i>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Emotion Detection</h3>
+                        <p>The AI identifies emotional patterns and classifies them into primary emotion categories.</p>
+                        <i class="fas fa-search step-icon"></i>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>Detailed Results</h3>
+                        <p>Get comprehensive analysis with confidence scores, probability breakdowns, and insights.</p>
+                        <i class="fas fa-chart-pie step-icon"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="disclaimer">
+                <i class="fas fa-info-circle"></i>
+                <p>This tool is designed for self-reflection and awareness. It is not a substitute for professional
+                    mental health diagnosis or treatment.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <i class="fas fa-brain"></i>
+                    <span>WELLness</span>
+                </div>
+                <p>Empowering emotional awareness through AI</p>
+                <div class="footer-links">
+                    <a href="#privacy">Privacy Policy</a>
+                    <a href="#terms">Terms of Service</a>
+                    <a href="#contact">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Character counter
+        const textInput = document.getElementById('textInput');
+        const charCount = document.getElementById('charCount');
+
+        if (textInput && charCount) {
+            textInput.addEventListener('input', function () {
+                charCount.textContent = this.value.length;
+            });
+        }
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Form validation
+        const form = document.querySelector('.prediction-form');
+        if (form) {
+            form.addEventListener('submit', function (e) {
+                const text = textInput.value.trim();
+                if (text.length < 3) {
+                    e.preventDefault();
+                    alert('Please enter at least 3 characters for analysis.');
+                    textInput.focus();
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
