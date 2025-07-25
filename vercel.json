@@ -3,7 +3,10 @@
   "builds": [
     {
       "src": "./api/index.py",
-      "use": "@vercel/python"
+      "use": "@vercel/python",
+      "config": {
+        "runtime": "python3.12"
+      }
     }
   ],
   "routes": [
@@ -12,7 +15,9 @@
       "dest": "/api/index.py"
     }
   ],
-  "env": {
-    "PYTHON_VERSION": "3.11"
+  "functions": {
+    "api/index.py": {
+      "maxDuration": 30
+    }
   }
 }
