@@ -67,6 +67,7 @@ You can deploy WELLness using platforms like **Render**, **Heroku**, or **Vercel
 This project was built for a hackathon to demonstrate how Machine Learning can be used to detect the mental state of a user based on their messages. It uses a CUSTOM ML model trained on a sentiment-labelled dataset acquired from KAGGLE 
 
 🔗Link to the Dataset Used: "https://www.kaggle.com/datasets/suchintikasarkar/sentiment-analysis-for-mental-health"
+
 🔗Link to the Google Colab Notebook: "https://colab.research.google.com/drive/11j8Obtap3SAMtm8K896imJbn_WJ_YjDo?usp=sharing"
 
 ## 🛠 Technologies Used
