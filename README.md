@@ -1,4 +1,15 @@
-# WELLness 🧠 – ML Powered Sentiment Analysis Web App
+<div align="center">
+  <img src="WELLnessMINDML-LOGO.png" alt="WELLness-MindML Logo" width="200"/>
+  
+  # WELLness 🧠 – ML Powered Sentiment Analysis Web App
+  
+  **Intelligent Web-Based ML Powered Sentiment Analyzer Tool for Individuals** 📚✨
+  
+  [![Python](https://img.shields.io/badge/Python-3.7+-blue.svg)](https://python.org)
+  [![Flask](https://img.shields.io/badge/Flask-2.0+-green.svg)](https://flask.palletsprojects.com)
+  [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+  
+</div>
 
 WELLness is an intelligent and user-friendly web application that leverages MACHINE LEARNING to analyze the sentiment behind your thoughts and expressions. With a simple and elegant interface, this application enables users to enter a message or feeling and receive instant feedback about the emotional tone - whether it's positive, negative, or neutral.
 
