@@ -1,8 +1,7 @@
+# WELLness 🧠 – ML Powered Sentiment Analysis Web App
 <div align="center">
   <img src="WELLnessMINDML-LOGO.png" alt="WELLness-MindML Logo" width="200"/>
-  
-  # WELLness 🧠 – ML Powered Sentiment Analysis Web App
-  
+
   **Intelligent Web-Based ML Powered Sentiment Analyzer Tool for Individuals** 📚✨
   
   [![Python](https://img.shields.io/badge/Python-3.7+-blue.svg)](https://python.org)
