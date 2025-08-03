@@ -81,6 +81,8 @@ This project was built for a hackathon to demonstrate how Machine Learning can b
 
 🔗Link to the Google Colab Notebook: "https://colab.research.google.com/drive/11j8Obtap3SAMtm8K896imJbn_WJ_YjDo?usp=sharing"
 
+🔗Link to the YouTube Video Demo: "https://youtu.be/FGAFDNekNh0"
+
 ## 🛠 Technologies Used
 
 - Google Colab (Training the Custom ML Model)
