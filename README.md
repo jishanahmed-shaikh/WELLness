@@ -40,7 +40,7 @@ WELLness/
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/yourusername/WELLness.git
+   git clone https://github.com/jishanahmed-shaikh/WELLness.git
    cd WELLness
    ```
 2. **Create a virtual environment (optional but recommended)**
@@ -92,3 +92,4 @@ This project was built for a hackathon to demonstrate how Machine Learning can b
 ---
 
 **Made with ❤️ for Mental Wellness with the Power of ML.**
+
