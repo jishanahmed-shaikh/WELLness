@@ -1,4 +1,8 @@
+<div align="center">
+
 # WELLness 🧠 – ML Powered Sentiment Analysis Web App
+</div>
+
 <div align="center">
   <img src="WELLnessMINDML-LOGO.png" alt="WELLness-MindML Logo" width="200"/>
 
